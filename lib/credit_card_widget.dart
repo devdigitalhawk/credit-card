@@ -165,12 +165,12 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
         gradient: backgroundGradientColor,
       ),
       margin: const EdgeInsets.all(16),
-      width: widget.width ?? width,
+      width: width,
       height: widget.height ??
           (orientation == Orientation.portrait ? height / 4 : height / 2),
       child: Stack(
         children: <Widget>[
-          getRandomBackground(widget.height, widget.width ?? width),
+          getRandomBackground(widget.height, width),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
@@ -217,7 +217,9 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                               padding: const EdgeInsets.all(5),
                               child: Text(
                                 widget.cvvCode.isEmpty
-                                    ? isAmex ? 'XXXX' : 'XXX'
+                                    ? isAmex
+                                        ? 'XXXX'
+                                        : 'XXX'
                                     : isAmex
                                         ? widget.cvvCode.length > 4
                                             ? widget.cvvCode.substring(0, 4)
@@ -241,7 +243,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                     alignment: Alignment.bottomRight,
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: 16, right: 16, bottom: 16),
+                          left: 16, right: 16, bottom: 25),
                       child: getCardTypeIcon(widget.cardNumber),
                     ),
                   ),
@@ -322,7 +324,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                     child: Row(
                       children: <Widget>[
                         Text(
-                          'Expiry',
+                          'Validade',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'halter',
@@ -346,11 +348,11 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                 Expanded(
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                        const EdgeInsets.only(left: 16, right: 25, bottom: 10),
                     child: Text(
                       widget.cardHolderName.isEmpty ||
                               widget.cardHolderName == null
-                          ? 'CARD HOLDER'
+                          ? 'NOME DO TITULAR'
                           : widget.cardHolderName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -369,8 +371,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 30),
               child: getCardTypeIcon(widget.cardNumber),
             ),
           ),
@@ -465,7 +466,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       case CardType.visa:
         icon = Image.asset(
           'icons/visa.png',
-          height: 64,
+          height: 60,
           width: 64,
           package: 'credit_card',
         );
@@ -475,7 +476,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       case CardType.americanExpress:
         icon = Image.asset(
           'icons/amex.png',
-          height: 64,
+          height: 60,
           width: 64,
           package: 'credit_card',
         );
@@ -485,7 +486,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       case CardType.mastercard:
         icon = Image.asset(
           'icons/mastercard.png',
-          height: 64,
+          height: 60,
           width: 64,
           package: 'credit_card',
         );
@@ -495,7 +496,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       case CardType.discover:
         icon = Image.asset(
           'icons/discover.png',
-          height: 64,
+          height: 60,
           width: 64,
           package: 'credit_card',
         );
@@ -504,7 +505,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
 
       default:
         icon = Container(
-          height: 64,
+          height: 60,
           width: 64,
         );
         isAmex = false;
@@ -675,22 +676,13 @@ String randomPic = 'https://placeimg.com/680/400/nature';
 
 Container getRandomBackground(double height, double width) {
   return Container(
-    child: Flex(
-      direction: Axis.horizontal,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
-            child: Image.network(
-              randomPic,
-              width: width,
-              height: height,
-              fit: BoxFit.cover,
-            ),
-          ),
-        )
-      ],
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(16.0),
+      child: Image.network(
+        randomPic,
+        width: width,
+        height: height,
+      ),
     ),
   );
 }
