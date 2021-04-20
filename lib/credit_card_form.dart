@@ -126,81 +126,93 @@ class _CreditCardFormState extends State<CreditCardForm> {
         child: Column(
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 16, right: 16),
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
+              margin: const EdgeInsets.only(left: 16, top: 4, right: 16),
               child: TextFormField(
-                controller: _cardNumberController,
+                controller: _cardHolderNameController,
                 cursorColor: widget.cursorColor ?? themeColor,
                 style: TextStyle(
+                  fontFamily: 'Montserrat',
                   color: widget.textColor,
                 ),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Card number',
+                  labelText: 'Nome do titular',
+                ),
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.next,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
+              margin: const EdgeInsets.only(left: 16, top: 4, right: 16),
+              child: TextFormField(
+                controller: _cardNumberController,
+                cursorColor: widget.cursorColor ?? themeColor,
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: widget.textColor,
+                ),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Número',
                   hintText: 'xxxx xxxx xxxx xxxx',
                 ),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-              child: TextFormField(
-                controller: _expiryDateController,
-                cursorColor: widget.cursorColor ?? themeColor,
-                style: TextStyle(
-                  color: widget.textColor,
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 6.0),
+                    margin: const EdgeInsets.only(left: 16, top: 4, right: 5),
+                    child: TextFormField(
+                      controller: _expiryDateController,
+                      cursorColor: widget.cursorColor ?? themeColor,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: widget.textColor,
+                      ),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Validade',
+                          hintText: '00/00'),
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                    ),
+                  ),
                 ),
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Expired Date',
-                    hintText: 'MM/YY'),
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-              child: TextField(
-                focusNode: cvvFocusNode,
-                controller: _cvvCodeController,
-                cursorColor: widget.cursorColor ?? themeColor,
-                style: TextStyle(
-                  color: widget.textColor,
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 6.0),
+                    margin: const EdgeInsets.only(left: 5, top: 4, right: 16),
+                    child: TextField(
+                      focusNode: cvvFocusNode,
+                      controller: _cvvCodeController,
+                      cursorColor: widget.cursorColor ?? themeColor,
+                      style: TextStyle(
+                        color: widget.textColor,
+                        fontFamily: 'Montserrat',
+                      ),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'CVV',
+                        hintText: 'XXXX',
+                      ),
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.done,
+                      onChanged: (String text) {
+                        setState(() {
+                          cvvCode = text;
+                        });
+                      },
+                    ),
+                  ),
                 ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'CVV',
-                  hintText: 'XXXX',
-                ),
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.done,
-                onChanged: (String text) {
-                  setState(() {
-                    cvvCode = text;
-                  });
-                },
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-              child: TextFormField(
-                controller: _cardHolderNameController,
-                cursorColor: widget.cursorColor ?? themeColor,
-                style: TextStyle(
-                  color: widget.textColor,
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Card Holder',
-                ),
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
-              ),
-            ),
+              ],
+            )
           ],
         ),
       ),
